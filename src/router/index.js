@@ -7,7 +7,7 @@ import Fail from '../components/home/Fail'
 import Home from '../components/Home'
 import CategoryIndex from '../components/category/CategoryIndex'
 import ProductIndex from '../components/product/ProductIndex'
-
+import OrderIndex from '../components/order/OrderIndex'
 Vue.use(Router)
 
 export default new Router({
@@ -28,10 +28,16 @@ export default new Router({
           path: '/category',
           name: 'Category',
           component: CategoryIndex
-        },{
+        },
+        {
           path: '/product',
           name: 'Product',
           component: ProductIndex
+        },
+        {
+          path: '/order',
+          name: 'Order',
+          component: OrderIndex
         }
       ]
     },

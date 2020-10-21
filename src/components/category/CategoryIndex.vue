@@ -4,7 +4,7 @@
       <switch>
       </switch>
       <!--<SideMenu></SideMenu>-->
-      <span @click="handleSizeChange">logout</span>
+      <el-button @click="handleAddProductCate">添加</el-button>
     </el-aside>
     <el-main>
       <!--<books></books>-->
@@ -45,14 +45,14 @@
       </el-pagination>
 
       <el-dialog
-        :title="isEdit?'编辑用户':'添加用户'"
+        :title="isEdit?'编辑分类':'添加分类'"
         :visible.sync="dialogVisible"
         width="40%">
         <el-form :model="category"
                  ref="categoryForm"
                  label-width="150px" size="small">
           <el-form-item label="分类名称：">
-            <el-input v-model="category.name" style="width: 250px"></el-input>
+            <el-input v-model="category.name" style="width: 100px"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -65,7 +65,7 @@
 </template>
 <script>
 
-import {fetchList, deleteProductCate} from '../api/category'
+import {fetchList, deleteProductCate, createProductCate,updateProductCate} from '../api/category'
 const defaultCategory = {
   id: null,
   name: null
@@ -75,6 +75,7 @@ export default {
   data () {
     return {
       category: Object.assign({},defaultCategory),
+      dialogVisible: false,
       isEdit: false,
       list: null,
       total: null,
@@ -102,7 +103,8 @@ export default {
       }
     },
     handleAddProductCate () {
-      this.$router.push('/pms/addProductCate')
+      this.dialogVisible = true
+      this.isEdit = false
     },
     handleDialogConfirm () {
       this.$confirm('是否要确认?', '提示', {
@@ -111,7 +113,7 @@ export default {
         type: 'warning'
       }).then(() => {
         if (this.isEdit) {
-          updateAdmin(this.category.id,this.category).then(response => {
+          updateProductCate(this.category.id,this.category).then(response => {
             this.$message({
               message: '修改成功！',
               type: 'success'
@@ -120,7 +122,7 @@ export default {
             this.getList();
           })
         } else {
-          createAdmin(this.category).then(response => {
+          createProductCate(this.category).then(response => {
             this.$message({
               message: '添加成功！',
               type: 'success'
